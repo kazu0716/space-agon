@@ -23,12 +23,13 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: Pull repo
         uses: actions/checkout@v3
       - name: Start minikube
-        uses: manusa/actions-setup-minikube@v2.7.1
+        id: space-agone
+        uses: medyagh/setup-minikube@master
       - name: Install Agones
         run: make agones-install
       - name: Install Open Match
