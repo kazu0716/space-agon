@@ -35,6 +35,9 @@ REGISTRY=${LOCATION}-docker.pkg.dev/${PROJECT}/${REPOSITORY}
 .PHONY: help
 help:
 	@echo ""
+	@echo "Build Docker images in local environment"
+	@echo "    make build-local"
+	@echo ""
 	@echo "Build Docker images"
 	@echo "    make build"
 	@echo ""
@@ -46,6 +49,9 @@ help:
 	@echo ""
 	@echo "Install Open Match"
 	@echo "    make openmatch-install"
+	@echo ""
+	@echo "Install Space Agon in local-cluster"
+	@echo "    make install-local"
 	@echo ""
 	@echo "Install Space Agon"
 	@echo "    make install"
@@ -67,6 +73,11 @@ help:
 	@echo ""
 
 # build space-agon docker images
+.PHONY: build-local
+build-local:
+	./scripts/build-local.sh
+
+# build space-agon docker images in local
 .PHONY: build
 build:
 	./scripts/build.sh ${REGISTRY}
@@ -83,14 +94,14 @@ gcloud-test-cluster:
 .PHONY: agones-install
 agones-install:
 	kubectl create namespace agones-system
-	kubectl apply -f https://raw.githubusercontent.com/googleforgames/agones/release-1.23.0/install/yaml/install.yaml
+	kubectl apply -f https://raw.githubusercontent.com/googleforgames/agones/release-1.27.0/install/yaml/install.yaml
 
 # uninstall agones and agones resources
 .PHONY: agones-uninstall
 agones-uninstall:
 	kubectl delete fleets --all --all-namespaces
 	kubectl delete gameservers --all --all-namespaces
-	kubectl delete -f https://raw.githubusercontent.com/googleforgames/agones/release-1.23.0/install/yaml/install.yaml
+	kubectl delete -f https://raw.githubusercontent.com/googleforgames/agones/release-1.27.0/install/yaml/install.yaml
 	kubectl delete namespace agones-system
 
 # install open-match
@@ -111,6 +122,11 @@ openmatch-uninstall:
 .PHONY: skaffold-setup
 skaffold-setup:
 	./scripts/setup-skaffold.sh ${PROJECT} ${REGISTRY}
+
+# install space-agon itself in local-cluster
+.PHONY: install-local
+install-local:
+	kubectl apply -f deploy-local.yaml
 
 # install space-agon itself
 .PHONY: install
