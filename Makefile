@@ -97,9 +97,9 @@ agones-uninstall:
 .PHONY: openmatch-install
 openmatch-install:
 	kubectl create namespace open-match
-	kubectl apply -f https://open-match.dev/install/v1.4.0/yaml/01-open-match-core.yaml \
-		-f https://open-match.dev/install/v1.4.0/yaml/06-open-match-override-configmap.yaml \
-		-f https://open-match.dev/install/v1.4.0/yaml/07-open-match-default-evaluator.yaml \
+	kubectl apply -f https://open-match.dev/install/v1.5.0/yaml/01-open-match-core.yaml \
+		-f https://open-match.dev/install/v1.5.0/yaml/06-open-match-override-configmap.yaml \
+		-f https://open-match.dev/install/v1.5.0/yaml/07-open-match-default-evaluator.yaml \
 		--namespace open-match
 
 # uninstall open-match
