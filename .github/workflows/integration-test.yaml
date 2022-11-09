@@ -27,11 +27,11 @@ jobs:
     steps:
       - name: Pull repo
         uses: actions/checkout@v3
-      - name: Start k3s
-        uses: debianmaster/actions-k3s@master
+      - name: Start minikube
+        uses: medyagh/setup-minikube@master
         id: space-agone
         with:
-          version: "v1.24.7-k3s1"
+          kubernetes-version: v1.24.7
       - name: Check k3s nodes
         run: kubectl get nodes
       - name: Install Agones
