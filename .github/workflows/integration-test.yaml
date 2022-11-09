@@ -31,7 +31,7 @@ jobs:
         uses: debianmaster/actions-k3s@master
         id: space-agone
         with:
-          version: v1.24.7+k3s1
+          version: v1.24.7
       - name: Check k3s nodes
         run: kubectl get nodes
       - name: Install Agones
@@ -46,6 +46,6 @@ jobs:
         run: kubectl get pods
       - name: Run integration-test
         run: make integration-test
-      # - name: Debug when test was failed
-      #   if: ${{ always() }}
-      #   uses: mxschmitt/action-tmate@v3
+      - name: Debug when test was failed
+        if: ${{ always() }}
+        uses: mxschmitt/action-tmate@v3
