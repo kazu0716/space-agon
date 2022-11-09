@@ -34,8 +34,6 @@ jobs:
           kubernetes-version: v1.24.7
           cpus: 2
           memory: 4096m
-      - name: Check minikube cluster
-        run: kubectl get cluster
       - name: Install Agones
         run: make agones-install
       - name: Install Open Match
@@ -44,10 +42,8 @@ jobs:
         run: make build-local
       - name: Install space-agone in local-cluster
         run: make install-local
-      - name: Check pod status
-        run: kubectl get pods
       - name: Run integration-test
         run: make integration-test
-      - name: Debug when test was failed
-        if: ${{ always() }}
-        uses: mxschmitt/action-tmate@v3
+      # - name: Debug when test was failed
+      #   if: ${{ always() }}
+      #   uses: mxschmitt/action-tmate@v3
