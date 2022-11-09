@@ -27,11 +27,13 @@ jobs:
     steps:
       - name: Pull repo
         uses: actions/checkout@v3
-      - name: Start minikube
-        uses: medyagh/setup-minikube@master
+      - name: Start k3s
+        uses: debianmaster/actions-k3s@master
         id: space-agone
         with:
-          kubernetes-version: v1.24.7
+          version: v1.24.7+k3s1
+      - name: Check k3s nodes
+        run: kubectl get nodes
       - name: Install Agones
         run: make agones-install
       - name: Install Open Match
@@ -40,8 +42,10 @@ jobs:
         run: make build-local
       - name: Install space-agone in local-cluster
         run: make install-local
+      - name: Check pod status
+        run: kubectl get pods
       - name: Run integration-test
         run: make integration-test
-      - name: Debug when test was failed
-        if: ${{ always() }}
-        uses: mxschmitt/action-tmate@v3
+      # - name: Debug when test was failed
+      #   if: ${{ always() }}
+      #   uses: mxschmitt/action-tmate@v3

@@ -23,6 +23,12 @@ docker build -f ./Dedicated.Dockerfile -t ${REGISTRY}/space-agon-dedicated:${TAG
 docker build -f ./Director.Dockerfile -t ${REGISTRY}/space-agon-director:${TAG} .
 docker build -f ./Mmf.Dockerfile -t ${REGISTRY}/space-agon-mmf:${TAG} .
 
+# Import images
+docker save ${REGISTRY}/space-agon-frontend:${TAG} | sudo k3s ctr images import -
+docker save ${REGISTRY}/space-agon-dedicated:${TAG} | sudo k3s ctr images import -
+docker save ${REGISTRY}/space-agon-director:${TAG} | sudo k3s ctr images import -
+docker save ${REGISTRY}/space-agon-mmf:${TAG} | sudo k3s ctr images import -
+
 # Replace image repository & tags
 ESC_REGISTRY=$(echo ${REGISTRY} | sed -e 's/\\/\\\\/g; s/\//\\\//g; s/&/\\\&/g') && \
 ESC_TAG=$(echo ${TAG} | sed -e 's/\\/\\\\/g; s/\//\\\//g; s/&/\\\&/g') && \
