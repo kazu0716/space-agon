@@ -62,6 +62,9 @@ help:
 	@echo "Uninstall Open Match"
 	@echo "    make openmatch-uninstall"
 	@echo ""
+	@echo "Uninstall Space Agon in local-cluster"
+	@echo "    make uninstall-local"
+	@echo ""
 	@echo "Uninstall Space Agon"
 	@echo "    make uninstall"
 	@echo ""
@@ -72,12 +75,12 @@ help:
 	@echo "    make integration-test"
 	@echo ""
 
-# build space-agon docker images
+# build space-agon docker images in local
 .PHONY: build-local
 build-local:
 	./scripts/build-local.sh
 
-# build space-agon docker images in local
+# build space-agon docker images
 .PHONY: build
 build:
 	./scripts/build.sh ${REGISTRY}
@@ -132,6 +135,11 @@ install-local:
 .PHONY: install
 install:
 	kubectl apply -f deploy.yaml
+
+# uninstall space-agon itself in local-cluster
+.PHONY: uninstall-local
+uninstall-local:
+	kubectl delete -f deploy-local.yaml
 
 # uninstall space-agon itself
 .PHONY: uninstall
