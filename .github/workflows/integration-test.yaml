@@ -34,13 +34,13 @@ jobs:
           kubernetes-version: v1.24.7
           cpus: 2
           memory: 4096m
-      - name: Install helm
+      - name: Install helm and envsubst
         run: |
           curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null &&
           sudo apt-get install apt-transport-https --yes && 
           echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list &&
           sudo apt-get update &&
-          sudo apt-get install helm -y
+          sudo apt-get install helm gettext-base -y
       - name: Install Agones in minikube
         run: make agones-install-local
       - name: Install Open Match in minikube
@@ -48,7 +48,7 @@ jobs:
       - name: Build images in local
         run: make build-local
       - name: Install space-agone in local-cluster
-        run: make install-local
+        run: make install
       - name: Run integration-test
         run: | 
           nohup minikube tunnel &

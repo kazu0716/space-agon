@@ -109,7 +109,7 @@ make install
 make build-local
 
 # Apply space-agon images for minikube cluster
-make install-local
+make install
 ```
 
 ## View and Play

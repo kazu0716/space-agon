@@ -26,6 +26,8 @@ REGISTRY=${LOCATION}-docker.pkg.dev/${PROJECT}/${REPOSITORY}
 
 AGONES_NS:=agones-system
 OM_NS:=open-match
+AGONES_VER:=1.27.0
+OM_VER:=1.5.0
 
 #   _____                    _
 #  |_   _|_ _ _ __ __ _  ___| |_ ___
@@ -59,9 +61,6 @@ help:
 	@echo "Install Open Match"
 	@echo "    make openmatch-install"
 	@echo ""
-	@echo "Install Space Agon in local-cluster"
-	@echo "    make install-local"
-	@echo ""
 	@echo "Install Space Agon"
 	@echo "    make install"
 	@echo ""
@@ -73,9 +72,6 @@ help:
 	@echo ""
 	@echo "Uninstall Open Match"
 	@echo "    make openmatch-uninstall"
-	@echo ""
-	@echo "Uninstall Space Agon in local-cluster"
-	@echo "    make uninstall-local"
 	@echo ""
 	@echo "Uninstall Space Agon"
 	@echo "    make uninstall"
@@ -90,7 +86,7 @@ help:
 # build space-agon docker images in local
 .PHONY: build-local
 build-local:
-	./scripts/build-local.sh
+	./scripts/build.sh test
 
 # build space-agon docker images
 .PHONY: build
@@ -116,20 +112,20 @@ agones-install-local:
 .PHONY: agones-install
 agones-install:
 	kubectl create namespace $(AGONES_NS)
-	kubectl apply -f https://raw.githubusercontent.com/googleforgames/agones/release-1.27.0/install/yaml/install.yaml
+	kubectl apply -f https://raw.githubusercontent.com/googleforgames/agones/release-$(AGONES_VER)/install/yaml/install.yaml
 
 # uninstall agones and agones resources
 .PHONY: agones-uninstall
 agones-uninstall:
 	kubectl delete fleets --all --all-namespaces
 	kubectl delete gameservers --all --all-namespaces
-	kubectl delete -f https://raw.githubusercontent.com/googleforgames/agones/release-1.27.0/install/yaml/install.yaml
+	kubectl delete -f https://raw.githubusercontent.com/googleforgames/agones/release-$(AGONES_VER)/install/yaml/install.yaml
 	kubectl delete namespace $(AGONES_NS)
 
 # install open-match in local-cluster
 .PHONY: openmatch-install-local
 openmatch-install-local:
-	helm repo add $(OM_NS) https://open-match.dev/chart/stable
+	helm repo add $(OM_NS) https://open-match.dev/chart/$(OM_VER)
 	kubectl create ns $(OM_NS)
 	helm install $(OM_NS) --create-namespace --namespace $(OM_NS) open-match/open-match \
 	--set open-match-customize.enabled=true \
@@ -155,9 +151,9 @@ openmatch-install-local:
 .PHONY: openmatch-install
 openmatch-install:
 	kubectl create namespace $(OM_NS)
-	kubectl apply -f https://open-match.dev/install/v1.5.0/yaml/01-open-match-core.yaml \
-		-f https://open-match.dev/install/v1.5.0/yaml/06-open-match-override-configmap.yaml \
-		-f https://open-match.dev/install/v1.5.0/yaml/07-open-match-default-evaluator.yaml \
+	kubectl apply -f https://open-match.dev/install/v$(OM_VER)/yaml/01-open-match-core.yaml \
+		-f https://open-match.dev/install/v$(OM_VER)/yaml/06-open-match-override-configmap.yaml \
+		-f https://open-match.dev/install/v$(OM_VER)/yaml/07-open-match-default-evaluator.yaml \
 		--namespace $(OM_NS)
 
 # uninstall open-match in local-cluster
@@ -176,20 +172,10 @@ openmatch-uninstall:
 skaffold-setup:
 	./scripts/setup-skaffold.sh ${PROJECT} ${REGISTRY}
 
-# install space-agon itself in local-cluster
-.PHONY: install-local
-install-local:
-	kubectl apply -f deploy_local.yaml
-
 # install space-agon itself
 .PHONY: install
 install:
 	kubectl apply -f deploy.yaml
-
-# uninstall space-agon itself in local-cluster
-.PHONY: uninstall-local
-uninstall-local:
-	kubectl delete -f deploy_local.yaml
 
 # uninstall space-agon itself
 .PHONY: uninstall
