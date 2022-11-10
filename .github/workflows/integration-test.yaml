@@ -34,7 +34,7 @@ jobs:
           kubernetes-version: v1.24.7
           cpus: 2
           memory: 4096m
-      - name: Install Helm
+      - name: Install helm
         run: |
           curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null &&
           sudo apt-get install apt-transport-https --yes && 
@@ -53,6 +53,3 @@ jobs:
         run: | 
           nohup minikube tunnel &
           make integration-test
-      - name: Debug when test was failed
-        if: ${{ always() }}
-        uses: mxschmitt/action-tmate@v3

@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-TAG=$(date +INDEV-%Y%m%d-%H%M%S)
+TAG=$(git rev-parse --short HEAD)
 REGISTRY=$1
 
 # Build images
