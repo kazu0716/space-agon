@@ -29,4 +29,4 @@ docker build -f ./Mmf.Dockerfile -t ${REGISTRY}/space-agon-mmf:${TAG} .
 # Replace image repository & tags
 ESC_REGISTRY=$(echo ${REGISTRY} | sed -e 's/\\/\\\\/g; s/\//\\\//g; s/&/\\\&/g') && \
 ESC_TAG=$(echo ${TAG} | sed -e 's/\\/\\\\/g; s/\//\\\//g; s/&/\\\&/g') && \
-sed -E 's/image: (.*)\/([^\/]*):(.*)/image: '${ESC_REGISTRY}'\/\2:'${ESC_TAG}'/' deploy_template.yaml > deploy-local.yaml
+sed -E 's/image: (.*)\/([^\/]*):(.*)/image: '${ESC_REGISTRY}'\/\2:'${ESC_TAG}'/' local_deploy_template.yaml > deploy_local.yaml
