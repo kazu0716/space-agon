@@ -45,9 +45,9 @@ jobs:
         run: make agones-install-local
       - name: Install Open Match in minikube
         run: make openmatch-install-local
-      - name: Build images in local
+      - name: Build space-agone for github-actions
         run: make build-local
-      - name: Install space-agone in local-cluster
+      - name: Install space-agone in minikube
         run: make install
       - name: Run integration-test
         run: | 

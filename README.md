@@ -25,6 +25,7 @@ Install tools in your dev environment:
 - [skaffold](https://skaffold.dev/) (Optional)
 - [helm](https://helm.sh/) (Optional)
 - [minikube](https://minikube.sigs.k8s.io/docs/start/) (Optional)
+- [hyperkit](https://github.com/moby/hyperkit) (Optional)
 
 _[Google Cloud Shell](https://cloud.google.com/shell) has all tools you need._
 
@@ -79,7 +80,8 @@ $ make openmatch-install
 ```bash
 # Start minikube
 # ref: https://minikube.sigs.k8s.io/docs/commands/start/
-$ minikube start --memory 4096 --cpus 2
+$ minikube start --cpus="2" --memory="4096" --kubernetes-version=v1.24.7 --driv
+er=hyperkit
 
 # Install minimized Agones
 $ make agones-install-local

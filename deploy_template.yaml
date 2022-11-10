@@ -75,7 +75,7 @@ spec:
         spec:
           containers:
             - name: dedicated
-              image: REGISTRY/space-agon-dedicated:TAG
+              image: ${REGISTRY}/space-agon-dedicated:${TAG}
               imagePullPolicy: IfNotPresent
               resources:
                 requests:
@@ -121,7 +121,7 @@ spec:
       serviceAccount: fleet-allocator
       containers:
         - name: director
-          image: REGISTRY/space-agon-director:TAG
+          image: ${REGISTRY}/space-agon-director:${TAG}
           imagePullPolicy: IfNotPresent
 
 ---
@@ -189,7 +189,7 @@ spec:
     spec:
       containers:
         - name: mmf
-          image: REGISTRY/space-agon-mmf:TAG
+          image: ${REGISTRY}/space-agon-mmf:${TAG}
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 50502

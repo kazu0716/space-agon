@@ -125,9 +125,9 @@ agones-uninstall:
 # install open-match in local-cluster
 .PHONY: openmatch-install-local
 openmatch-install-local:
-	helm repo add $(OM_NS) https://open-match.dev/chart/$(OM_VER)
+	helm repo add $(OM_NS) https://open-match.dev/chart/stable
 	kubectl create ns $(OM_NS)
-	helm install $(OM_NS) --create-namespace --namespace $(OM_NS) open-match/open-match \
+	helm install $(OM_NS) --create-namespace --namespace $(OM_NS) open-match/open-match --version $(OM_VER) \
 	--set open-match-customize.enabled=true \
 	--set open-match-customize.evaluator.enabled=true \
 	--set open-match-customize.evaluator.replicas=1 \
