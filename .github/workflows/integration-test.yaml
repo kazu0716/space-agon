@@ -50,7 +50,9 @@ jobs:
       - name: Install space-agone in local-cluster
         run: make install-local
       - name: Run integration-test
-        run: make integration-test
+        run: | 
+          nohup minikube tunnel &
+          make integration-test
       - name: Debug when test was failed
         if: ${{ always() }}
         uses: mxschmitt/action-tmate@v3

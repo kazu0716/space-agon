@@ -98,9 +98,9 @@ spec:
   policy:
     type: Buffer
     buffer:
-      bufferSize: 2
-      minReplicas: 0
-      maxReplicas: 50
+      bufferSize: 0
+      minReplicas: 1
+      maxReplicas: 1
 
 ---
 

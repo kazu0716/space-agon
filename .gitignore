@@ -1,3 +1,4 @@
 deploy.yaml
 deploy_local.yaml
 skaffold.yaml
+nohup.out
